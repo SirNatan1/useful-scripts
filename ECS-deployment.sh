@@ -1,7 +1,15 @@
 # Fetch the task definition using AWS CLI
-task_definition=`(aws ecs describe-task-definition --task-definition "$(task_def)")`
-# Update the image in the task definition
-NEW_TASK_DEFINITION=$(echo $task_definition | jq --arg IMAGE "$ecr_name:$image_id" '.taskDefinition | .containerDefinitions[0].image = $IMAGE | del(.taskDefinitionArn) | del(.revision) | del(.status) | del(.requiresAttributes) | del(.compatibilities)')
+task_definition=`(aws ecs describe-task-definition --task-definition "$task_def" --no-cli-pager)`
+# Determine the index based on the container name in the task definition
+CONTAINER_INDEX=`(echo -E "$task_definition" | jq --arg CONTAINER "$container_name" '.taskDefinition.containerDefinitions | map(.name) | index($CONTAINER)')`
+# Check if the container name was found in the task definition
+if [ "$CONTAINER_INDEX" != "null" ]; then
+  # Update the image in the task definition for the selected container index
+  NEW_TASK_DEFINITION=`(echo -E "$task_definition" | jq --arg IMAGE "$ecr_name:$image_id" --argjson INDEX "$CONTAINER_INDEX" '.taskDefinition | .containerDefinitions[$INDEX].image = $IMAGE | del(.taskDefinitionArn) | del(.revision) | del(.status) | del(.requiresAttributes) | del(.compatibilities)')`
+else
+  echo "Container name '$container_name' not found in the task definition."
+  exit 1
+fi
 # Print the updated task definition
 echo $NEW_TASK_DEFINITION
 # Remove unnecessary fields from the JSON
