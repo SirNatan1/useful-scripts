@@ -19,3 +19,7 @@ This script will deploy a new task revision to ECS with codedeploy.
 Unlike ECS-codedeploy-deployment.sh this deployment is via the ECS and not the codedeploy, meaning,
 There's a feature within does not succeed within 30 minutes by default or up to 10 minutes more than your deployment group's configured wait time.
 It's up to you which deployment to use
+
+### ECS-rolling.sh
+This script will deploy a new task revision to ECS with rolling deployment, without codedeploy.
+This is the most basic CD in ECS which will override the existing revision.
