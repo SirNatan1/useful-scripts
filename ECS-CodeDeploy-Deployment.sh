@@ -5,7 +5,7 @@ CONTAINER_INDEX=`(echo -E "$task_definition" | jq --arg CONTAINER "$container_na
 # Check if the container name was found in the task definition
 if [ "$CONTAINER_INDEX" != "null" ]; then
   # Update the image in the task definition for the selected container index
-  NEW_TASK_DEFINITION=`(echo -E "$task_definition" | jq --arg IMAGE "$(ecr_name):$(Build.SourceVersion)" --argjson INDEX "$CONTAINER_INDEX" '.taskDefinition | .containerDefinitions[$INDEX].image = $IMAGE | del(.taskDefinitionArn) | del(.revision) | del(.status) | del(.requiresAttributes) | del(.compatibilities)')`
+  NEW_TASK_DEFINITION=`(echo -E "$task_definition" | jq --arg IMAGE "$ecr_name:$image_id" --argjson INDEX "$CONTAINER_INDEX" '.taskDefinition | .containerDefinitions[$INDEX].image = $IMAGE | del(.taskDefinitionArn) | del(.revision) | del(.status) | del(.requiresAttributes) | del(.compatibilities)')`
 else
   echo "Container name '$container_name' not found in the task definition."
   exit 1
