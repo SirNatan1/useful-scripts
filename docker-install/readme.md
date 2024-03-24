@@ -21,7 +21,7 @@ This Bash script automates the installation of Docker and Docker Compose on an U
 ```bash
 chmod +x <filename>.sh
 sudo ./<filename>.sh
-
+```
 
 ## For Windows:
 
