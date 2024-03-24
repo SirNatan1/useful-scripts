@@ -19,6 +19,7 @@ This Bash script automates the installation of Docker and Docker Compose on an U
 
 **Usage:**
 ```bash
+curl -O https://raw.githubusercontent.com/SirNatan1/useful-scripts/main/docker-install/<filename>.sh
 chmod +x <filename>.sh
 sudo ./<filename>.sh
 ```
