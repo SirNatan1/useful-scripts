@@ -1,0 +1,20 @@
+pipelines:
+  default:
+    - step:
+        name: Build all zips
+        script:
+          - apt-get update && apt-get install -y zip
+          - ./bin/package.sh <name>
+        artifacts:
+          - build/<name>.zip
+    - step:
+        name: Deploy function
+        script:
+          - pipe: <pipe>
+            variables:
+              AWS_ACCESS_KEY_ID: ${AWS_PROD_ACCESS_KEY_ID}
+              AWS_SECRET_ACCESS_KEY: ${AWS_PROD_SECRET_ACCESS_KEY}
+              AWS_DEFAULT_REGION: 'eu-central-1'
+              FUNCTION_NAME: 'DATA_PLATFORM_ENQUEUE_ALL'
+              COMMAND: 'update'
+              ZIP_FILE: 'build/<name>.zip'
