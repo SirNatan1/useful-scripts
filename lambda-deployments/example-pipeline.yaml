@@ -12,9 +12,9 @@ pipelines:
         script:
           - pipe: <pipe>
             variables:
-              AWS_ACCESS_KEY_ID: ${AWS_PROD_ACCESS_KEY_ID}
-              AWS_SECRET_ACCESS_KEY: ${AWS_PROD_SECRET_ACCESS_KEY}
-              AWS_DEFAULT_REGION: 'eu-central-1'
-              FUNCTION_NAME: 'DATA_PLATFORM_ENQUEUE_ALL'
+              AWS_ACCESS_KEY_ID: ${AWS_ACCESS_KEY_ID}
+              AWS_SECRET_ACCESS_KEY: ${AWS_SECRET_ACCESS_KEY}
+              AWS_DEFAULT_REGION: '<region>'
+              FUNCTION_NAME: '<func_name>'
               COMMAND: 'update'
               ZIP_FILE: 'build/<name>.zip'
