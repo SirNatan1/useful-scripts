@@ -4,7 +4,7 @@ set -e
 
 repo=$1
 base_url="https://git-codecommit.eu-west-1.amazonaws.com/v1/repos"
-export ORG="bst-ai"
+export ORG="<github-org-name>"
 log_file="log_file.log"
 
 echo "$(date '+%Y-%m-%d %H:%M:%S') - Starting $repo" | tee -a "$log_file"
